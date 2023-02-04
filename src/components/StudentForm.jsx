@@ -1,7 +1,9 @@
 import { Button, MenuItem, TextField } from "@mui/material";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../context";
 import { api } from "../queries";
+import { readExcelFile } from "../utils/convertExcelToJson";
+import convertKeysToLowerCase from "../utils/convertKeysToLowercase";
 
 const StudentForm = () => {
     const [name, setName] = useState("");
@@ -10,6 +12,7 @@ const StudentForm = () => {
     const [stream, setStream] = useState("");
     const [loading, setLoading] = useState(false);
     const streams = ["Class X", "Class XII", "JEE", "UPSC", "NEET"];
+    const chooseRef = useRef();
 
     const { user } = useAuth();
 
@@ -25,7 +28,7 @@ const StudentForm = () => {
         console.log(obj);
         setLoading(true);
         try {
-            const res = await api.post("/volunteer/add-student", obj);
+            const res = await api.post("/student/add", obj);
             setLoading(false);
             if (res.status === 200) {
                 setName("");
@@ -37,6 +40,59 @@ const StudentForm = () => {
         } catch (e) {
             console.log(e);
             window.alert(e.response.data.message);
+        }
+    };
+    const keys = ["name", "address", "age", "stream"];
+
+    const checkExcel = async (excelJson) => {
+        let isValid = true;
+        if (!excelJson || !excelJson.length) {
+            window.alert("Invalid Excel file");
+        } else {
+            let filtered = [];
+            for (let i = 0; i < excelJson.length; i++) {
+                keys.forEach((key) => {
+                    if (
+                        !Object.keys(excelJson[i])
+                            .map((e) => e.toLowerCase())
+                            .includes(key.toLowerCase())
+                    ) {
+                        isValid = false;
+                        window.alert(
+                            "Excel file does not contain the necessary columns ! name, address, age, stream"
+                        );
+                        return;
+                    }
+                });
+                filtered.push({
+                    ...convertKeysToLowerCase(excelJson[i]),
+                    addedBy: user.user_id,
+                });
+            }
+            // excelJson.forEach((row) => {
+            //     keys.forEach((key) => {
+            //         if (
+            //             !Object.keys(row)
+            //                 .map((e) => e.toLowerCase())
+            //                 .includes(key.toLowerCase())
+            //         ) {
+            //             isValid = false;
+            //             window.alert(
+            //                 "Excel file does not contain the necessary columns ! name, address, age, stream"
+            //             );
+            //             return;
+            //         } else {
+            //             filtered;
+            //         }
+            //     });
+            // });
+
+            if (isValid) {
+                console.log(filtered);
+                const result = await api.post("/student/add-many", filtered);
+                console.log(result);
+                window.alert(result.data.message);
+            }
         }
     };
 
@@ -115,7 +171,19 @@ const StudentForm = () => {
                 <Button color="error" variant="contained" type="reset">
                     Reset
                 </Button>
-                <Button variant="outlined">Upload Excel Sheet</Button>
+                <Button
+                    variant="outlined"
+                    onClick={() => chooseRef.current.click()}
+                >
+                    Upload Excel Sheet
+                </Button>
+                <input
+                    type="file"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    ref={chooseRef}
+                    style={{ display: "none" }}
+                    onChange={(e) => readExcelFile(e.target.files, checkExcel)}
+                />
             </div>
         </form>
     );
