@@ -5,7 +5,7 @@ import { api } from "../queries";
 import { readExcelFile } from "../utils/convertExcelToJson";
 import convertKeysToLowerCase from "../utils/convertKeysToLowercase";
 
-const StudentForm = () => {
+const StudentForm = ({ inst }) => {
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [age, setAge] = useState("");
@@ -66,8 +66,9 @@ const StudentForm = () => {
                 });
                 filtered.push({
                     ...convertKeysToLowerCase(excelJson[i]),
-                    addedBy: user.user_id,
+                    [inst ? "addedByInst" : "addedBy"]: user.user._id,
                 });
+                console.log(filtered);
             }
             // excelJson.forEach((row) => {
             //     keys.forEach((key) => {

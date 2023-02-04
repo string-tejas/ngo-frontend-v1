@@ -15,7 +15,7 @@ const DashAdminViewsStudent = () => {
                 res.data.forEach((e) => {
                     arr.push({
                         ...e,
-                        addedby: e.addedBy.name,
+                        addedby: e.addedBy?.name || e.addedByInst?.name,
                         institutealloted: e.instituteAlloted,
                     });
                 });
