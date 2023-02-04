@@ -6,7 +6,6 @@ import { BiLogOut } from "react-icons/bi";
 
 const Index = () => {
     const [selected, setSelected] = useState(window.location.pathname);
-    const navigate = useNavigate();
 
     const auth = useAuth();
 
@@ -50,6 +49,7 @@ const Index = () => {
                     marginTop: "auto",
                 }}
                 button
+                onClick={auth.logOut}
             />
         </Sidebar.Container>
     );
