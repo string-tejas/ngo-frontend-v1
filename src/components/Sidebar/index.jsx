@@ -33,10 +33,10 @@ const Index = () => {
                     onClick={() => handleSelect("/dashboard/institutes")}
                 />
                 <Sidebar.Item
-                    to="/dashboard/admins"
-                    label={"Admins"}
-                    selected={selected === "/dashboard/admins"}
-                    onClick={() => handleSelect("/dashboard/admins")}
+                    to="/dashboard/students"
+                    label={"Students"}
+                    selected={selected === "/dashboard/students"}
+                    onClick={() => handleSelect("/dashboard/students")}
                 />
             </Sidebar.Navigation>
 

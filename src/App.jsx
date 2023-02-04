@@ -14,6 +14,8 @@ import Dashboard from "./page/Dashboard";
 import Home from "./page/Home";
 import Login from "./page/Login";
 import "./App.css";
+import DashAdminViewsInstitute from "./page/DashAdminViewsInstitute";
+import DashAdminViewsStudent from "./page/DashAdminViewsStudent";
 
 function App() {
     const navigate = useNavigate();
@@ -48,6 +50,24 @@ function App() {
                 element={
                     <Protected>
                         <Dashboard />
+                    </Protected>
+                }
+            />
+            <Route
+                exact
+                path="/dashboard/institutes"
+                element={
+                    <Protected>
+                        <DashAdminViewsInstitute />
+                    </Protected>
+                }
+            />
+            <Route
+                exact
+                path="/dashboard/students"
+                element={
+                    <Protected>
+                        <DashAdminViewsStudent />
                     </Protected>
                 }
             />
