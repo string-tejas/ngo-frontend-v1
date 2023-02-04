@@ -13,6 +13,7 @@ import { useAuth } from "./context";
 import Dashboard from "./page/Dashboard";
 import Home from "./page/Home";
 import Login from "./page/Login";
+import "./App.css";
 
 function App() {
     const navigate = useNavigate();

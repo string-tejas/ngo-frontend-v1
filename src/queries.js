@@ -16,14 +16,3 @@ export const checkLoggedIn = async () => {
         return null;
     }
 };
-
-export const loginInstitute = async (body) => {
-    try {
-        const res = await api.post("/auth/login/institute", body);
-        if (res.status === 200) {
-            return res.data;
-        } else return null;
-    } catch (e) {
-        return null;
-    }
-};

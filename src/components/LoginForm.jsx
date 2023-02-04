@@ -26,7 +26,7 @@ export function LoginForm({ onSubmit }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [submitting, setSubmitting] = useState(false);
-    const [type, setType] = useState("admin");
+    const [type, setType] = useState("volunteer");
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);

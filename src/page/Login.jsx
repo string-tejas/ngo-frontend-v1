@@ -15,6 +15,7 @@ const Login = () => {
                 setUser({
                     token: result.data.token,
                     userType: result.data.userType,
+                    user: result.data.user,
                 });
                 navigate("/dashboard");
             }
