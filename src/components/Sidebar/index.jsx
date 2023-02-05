@@ -15,7 +15,20 @@ const Index = () => {
 
     return (
         <Sidebar.Container>
-            <Sidebar.Header>Hello</Sidebar.Header>
+            <Sidebar.Header>
+                <img
+                    src="/yasham.jpeg"
+                    style={{ borderRadius: "50%", width: "40%" }}
+                />
+                <span
+                    style={{
+                        color: "white",
+                        fontFamily: "Outfit",
+                    }}
+                >
+                    Yasham Foundation
+                </span>
+            </Sidebar.Header>
 
             <Sidebar.Separator />
 

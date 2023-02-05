@@ -5,7 +5,7 @@ import { api } from "../queries";
 import { readExcelFile } from "../utils/convertExcelToJson";
 import convertKeysToLowerCase from "../utils/convertKeysToLowercase";
 
-const StudentForm = ({ inst }) => {
+const StudentForm = ({ inst, cb = () => {} }) => {
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [age, setAge] = useState("");
@@ -36,6 +36,7 @@ const StudentForm = ({ inst }) => {
                 setAge("");
                 setStream("");
                 window.alert("Student added successfully");
+                cb();
             }
         } catch (e) {
             console.log(e);
@@ -70,29 +71,13 @@ const StudentForm = ({ inst }) => {
                 });
                 console.log(filtered);
             }
-            // excelJson.forEach((row) => {
-            //     keys.forEach((key) => {
-            //         if (
-            //             !Object.keys(row)
-            //                 .map((e) => e.toLowerCase())
-            //                 .includes(key.toLowerCase())
-            //         ) {
-            //             isValid = false;
-            //             window.alert(
-            //                 "Excel file does not contain the necessary columns ! name, address, age, stream"
-            //             );
-            //             return;
-            //         } else {
-            //             filtered;
-            //         }
-            //     });
-            // });
 
             if (isValid) {
                 console.log(filtered);
                 const result = await api.post("/student/add-many", filtered);
                 console.log(result);
                 window.alert(result.data.message);
+                cb();
             }
         }
     };

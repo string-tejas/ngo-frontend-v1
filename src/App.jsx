@@ -16,6 +16,7 @@ import Login from "./page/Login";
 import "./App.css";
 import DashAdminViewsInstitute from "./page/DashAdminViewsInstitute";
 import DashAdminViewsStudent from "./page/DashAdminViewsStudent";
+import SignUp from "./page/SignUp";
 
 function App() {
     const navigate = useNavigate();
@@ -26,7 +27,12 @@ function App() {
     useEffect(() => {
         console.log("user", user);
         localStorage.setItem("user", JSON.stringify(user));
-        if (!user && location.pathname !== "/") navigate("/login");
+        if (
+            !user &&
+            location.pathname !== "/" &&
+            location.pathname !== "/signup"
+        )
+            navigate("/login");
         setLoading(false);
     }, [user]);
 
@@ -35,12 +41,22 @@ function App() {
     return (
         <Routes>
             <Route exact path="/" element={<Home />} />
+
             <Route
                 exact
                 path="/login"
                 element={
                     <NotLoggedIn>
                         <Login />
+                    </NotLoggedIn>
+                }
+            />
+            <Route
+                exact
+                path="/signup"
+                element={
+                    <NotLoggedIn>
+                        <SignUp />
                     </NotLoggedIn>
                 }
             />

@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import CustomTable from "../components/CustomTable";
 import Navbar from "../components/Navbar";
 import StudentForm from "../components/StudentForm";
+import { api } from "../queries";
 
 const DashboardInstitute = () => {
+    const [students, setStudents] = useState([]);
+
+    const getStudents = () => {
+        api.get("/student")
+            .then((d) => {
+                setStudents(d.data);
+            })
+            .catch((e) => console.log(e));
+    };
+
+    useEffect(() => {
+        getStudents();
+    });
+
     return (
-        <>
+        <div
+            style={{
+                background: "#eee",
+            }}
+        >
             <Navbar />
             <div
                 style={{
@@ -20,22 +40,31 @@ const DashboardInstitute = () => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        background: "#eee",
+                        padding: "18px",
                         paddingTop: "24px",
                     }}
                 >
-                    Yo
+                    <h2 style={{ alignSelf: "start", margin: "12px" }}>
+                        Students Requiring Allocation
+                    </h2>
+                    <CustomTable
+                        columns={["Name", "Age", "Address", "Stream"]}
+                        data={students}
+                    />
                 </div>
                 <div
                     style={{
                         display: "flex",
                         flexDirection: "column",
                         paddingTop: "24px",
+                        background: "#eee",
                     }}
                 >
-                    <StudentForm inst />
+                    <StudentForm inst cb={getStudents} />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

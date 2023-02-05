@@ -23,14 +23,21 @@ import {
 } from "./LoginItems";
 import { PropagateLoader } from "react-spinners";
 
-export function LoginForm({ onSubmit }) {
+export default function SignUp({ onSubmit }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [submitting, setSubmitting] = useState(false);
     const [type, setType] = useState("volunteer");
+    const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+    const [city, setCity] = useState("");
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
+    };
+
+    const handleNameChange = (event) => {
+        setName(event.target.value);
     };
 
     const handlePasswordChange = (event) => {
@@ -40,13 +47,23 @@ export function LoginForm({ onSubmit }) {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         setSubmitting(true);
-        await onSubmit(
-            {
+        let obj;
+        if (type === "volunteer") {
+            obj = {
                 email,
                 password,
-            },
-            type
-        );
+                name,
+                age,
+            };
+        } else {
+            obj = {
+                email,
+                password,
+                name,
+                city,
+            };
+        }
+        await onSubmit(obj, type);
         setSubmitting(false);
     };
 
@@ -60,13 +77,11 @@ export function LoginForm({ onSubmit }) {
                 <Branding>
                     <ImageLogo src="/vite.svg" />
                     <BrandingTitle>Yasham Foundation</BrandingTitle>
-                    <BrandingSubtitle>
-                        Login into your aaccount
-                    </BrandingSubtitle>
+                    <BrandingSubtitle>Sign Up</BrandingSubtitle>
                 </Branding>
                 <LF onSubmit={handleFormSubmit}>
                     <LoginTitle style={{ marginBottom: "12px" }}>
-                        Log In
+                        Sign Up
                     </LoginTitle>
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">
@@ -79,11 +94,22 @@ export function LoginForm({ onSubmit }) {
                             label="Age"
                             onChange={handleChange}
                         >
-                            <MenuItem value={"admin"}>Admin</MenuItem>
                             <MenuItem value={"volunteer"}>Volunteer</MenuItem>
                             <MenuItem value={"institute"}>Institute</MenuItem>
                         </Select>
                     </FormControl>
+                    <TextField
+                        fullWidth
+                        margin="dense"
+                        label="Name"
+                        color="secondary"
+                        type="text"
+                        variant="standard"
+                        value={name}
+                        onChange={handleNameChange}
+                        sx={{ fontFamily: "Outfit" }}
+                        required
+                    />
                     <TextField
                         fullWidth
                         margin="dense"
@@ -108,11 +134,38 @@ export function LoginForm({ onSubmit }) {
                         sx={{ fontFamily: "Outfit" }}
                         required
                     />
+                    {type === "volunteer" ? (
+                        <TextField
+                            fullWidth
+                            margin="dense"
+                            label="Age"
+                            color="secondary"
+                            type="number"
+                            variant="standard"
+                            value={age}
+                            onChange={(e) => setAge(e.target.value)}
+                            sx={{ fontFamily: "Outfit" }}
+                            required
+                        />
+                    ) : (
+                        <TextField
+                            fullWidth
+                            margin="dense"
+                            label="City"
+                            color="secondary"
+                            type="text"
+                            variant="standard"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            sx={{ fontFamily: "Outfit" }}
+                            required
+                        />
+                    )}
                     {submitting ? (
                         <ButtonLoading />
                     ) : (
                         <SubmitButton type="submit" disabled={submitting}>
-                            Continue
+                            Register
                         </SubmitButton>
                     )}
                     <div
@@ -123,7 +176,7 @@ export function LoginForm({ onSubmit }) {
                             justifyContent: "center",
                         }}
                     >
-                        <ForgotLink to={"/signup"}>Sign up</ForgotLink>
+                        <ForgotLink to={"/login"}>Log In</ForgotLink>
                     </div>
                 </LF>
             </LoginCard>
