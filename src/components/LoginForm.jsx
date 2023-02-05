@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import {
     Branding,
+    BrandingInfo,
     BrandingSubtitle,
     BrandingTitle,
     ForgotLink,
@@ -58,11 +59,17 @@ export function LoginForm({ onSubmit }) {
         <GradientBackground>
             <LoginCard>
                 <Branding>
-                    <ImageLogo src="/vite.svg" />
+                    <ImageLogo
+                        src="/yasham.jpeg"
+                        style={{ borderRadius: "50%" }}
+                    />
                     <BrandingTitle>Yasham Foundation</BrandingTitle>
                     <BrandingSubtitle>
                         Login into your aaccount
                     </BrandingSubtitle>
+                    <BrandingInfo>
+                        Empower, Educate <br /> Enlighten
+                    </BrandingInfo>
                 </Branding>
                 <LF onSubmit={handleFormSubmit}>
                     <LoginTitle style={{ marginBottom: "12px" }}>

@@ -61,10 +61,11 @@ export const BrandingSubtitle = styled.h3`
 export const BrandingInfo = styled.span`
     font-family: "Outfit";
     color: #ffddff;
+    font-size: 1.2rem;
     margin: 0;
     padding: 0;
     margin-top: 3.8rem;
-    font-weight: 100;
+    font-weight: 400;
     display: flex;
     align-items: center;
     padding: 0 2rem;
