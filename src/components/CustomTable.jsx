@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { v4 as uuid } from "uuid";
 
-const CustomTable = ({ columns = [], data = [] }) => {
+const CustomTable = ({ columns = [], data = [], onClickRow = () => {} }) => {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -36,9 +36,9 @@ const CustomTable = ({ columns = [], data = [] }) => {
                                 {columns.map((i) => (
                                     <TableCell
                                         key={uuid()}
-                                        onClick={() =>
-                                            console.log("Hello world")
-                                        }
+                                        onClick={() => {
+                                            onClickRow(d);
+                                        }}
                                     >
                                         {d[i.toLowerCase()]}
                                     </TableCell>
